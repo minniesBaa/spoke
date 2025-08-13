@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Mozilla+Text:wght@200..700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin-top: calc((100vh - 60vmin) / 2 - 60px);
+            background-color: #555;
+            color: #eee;
+        }
+        #b {
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            width: 60vmin;
+            height: 72vmin;
+            border-radius: 5%;
+            background-color: #434343;
+        }
+        #body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tile {
+            text-align: center;
+            font-family: "Google Sans Code", monospace;
+            font-optical-sizing: auto;
+            font-weight: 550;
+            font-style: normal;
+            font-size: 7vmin;
+            position: absolute;
+            width: 10vmin;
+            height: 10vmin;
+            border: 2px solid #333;
+            top: 0%;
+            left: 0%;
+            border-radius: 25%;
+        }
+    </style>
+</head>
+<body>
+    <div id="body">
+    <div id="b">
+    </div>
+    <div>
+        completed words
+    </div>
+    </div>
+    <script>
+        let l1;
+        let l2;
+        let l3;
+        let l4;
+        let l5;
+        let gtick = [
+
+        ]
+        class Block {
+            constructor(x, y, yo, xo, text, color){
+                this._setProps(x, y, yo, xo, text, color);
+                const blockParent = document.getElementById("b");
+                this.el = document.createElement("div");
+                this.el.className = "tile"
+                this.el.innerHTML = text
+                blockParent.appendChild(this.el);
+                this._updatePosition();
+                this.yvel = -0.5;
+                this.ge = false;
+                this.lock = null;
+            }
+            toggleGravity(){
+                this.ge = !this.ge;
+            }
+            goto(x, y, yo, xo, color){
+                this._setProps(x, y, yo, xo, color);
+                this._updatePosition();
+            }
+            gravityTick(){
+                if (this.yo > 1000 | !this.ge){return;}
+                this.yvel += 0.01
+                
+                if (this.yo >= vminToPx(11.5)){
+                    this.y++;
+                    this.yo -= vminToPx(11.5)
+                }
+                if (this.y == this.lock){
+                    this.toggleGravity();
+                    this.goto(this.x, this.y, 0, 0, this.color);
+                }
+                this.goto(this.x, this.y, this.yo + this.yvel, this.xo, this.color);
+            }
+            _setProps(x, y, yo, xo, color){
+                this.x = x;
+                this.y = y;
+                this.yo = yo;
+                this.xo = xo;
+                this.color = color;
+            }
+            _updatePosition(){
+                this.el.style.left = `calc(${10.5 * this.x - 10 + this.x}vmin + ${this.xo}px)`;
+                this.el.style.top = `calc(${10.5 * this.y - 10 + this.y}vmin + ${this.yo}px)`;
+                this.el.style.backgroundColor = this.color;
+            }
+        }
+        function vminToPx(vmin){
+            return (vmin / 100) * Math.min(window.innerHeight, window.innerWidth);
+        }
+        function tick(){
+            gtick.forEach(i => {
+                i.gravityTick();
+            })
+        }
+        function init(){
+            const patterns = [
+                [1, 2],
+                [3, 2],
+                [5, 2],
+                [2, 3],
+                [3, 3],
+                [4, 3],
+                [1, 4],
+                [2, 4],
+                [3, 4],
+                [4, 4],
+                [5, 4],
+                [2, 5],
+                [3, 5],
+                [4, 5],
+                [1, 6],
+                [3, 6],
+                [5, 6]
+            ]
+            let j = 2;
+            patterns.forEach(i => {
+                j++
+                const currentTile = new Block(i[0], i[1] - j, 0, 0, "")
+                currentTile.lock = i[1]
+                currentTile.toggleGravity()
+                gtick.push(currentTile)
+            })
+            setInterval(tick, 5)
+        }
+        function captureKeyboardInput(event){
+            const allowedChars = "qwertyuiopasdfghjklzxcvbnm";
+            const char = event.key.toLowerCase();
+            if (allowedChars.includes(char)){
+                console.log(char)
+            }
+        }
+        document.addEventListener("keyup", captureKeyboardInput)
+        setTimeout(init, 100)
+
+    </script>
+</body>
+</html>

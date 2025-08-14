@@ -11,5 +11,5 @@ for i in range(3):
     while word[2] != middlechar:
         word = getword()
     wl.append(word)
-with open("puzzle.txt") as file:
+with open("puzzle.txt", "w") as file:
     file.write(str(wl))

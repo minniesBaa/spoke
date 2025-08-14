@@ -25,7 +25,7 @@ jobs:
       - name: Commit and push if it changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "[automated] generate words for today"
+          commit_message: "[ACTIONS] 📃 Generate words for today"
           branch: main
           file_pattern: puzzle.txt
           

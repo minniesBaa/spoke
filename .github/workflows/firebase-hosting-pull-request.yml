@@ -19,3 +19,11 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JWORDGAME012 }}
           projectId: jwordgame012
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[ACTION] 🔥 Copy files to public directory for Firebase deployment"
+          branch: main
+          file_pattern: public/*
+          
+          commit_user_name: "firebase deployment bot"
+          commit_user_email: "actions@github.com"

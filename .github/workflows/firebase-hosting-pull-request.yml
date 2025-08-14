@@ -20,7 +20,7 @@ jobs:
         with:
           commit_message: "[ACTION] 🔥 Copy files to public directory for Firebase deployment"
           branch: main
-          file_pattern: public/*
+          file_pattern: "public/* *.txt"
           
           commit_user_name: "firebase deployment bot"
           commit_user_email: "actions@github.com"

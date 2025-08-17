@@ -1,1 +1,1 @@
-['quest', 'speed', 'knelt', 'break']
+["blind", "crier", "edict", "pains"]

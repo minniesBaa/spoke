@@ -53,13 +53,14 @@
     </div>
     </div>
     <script>
+        let words = ['quest', 'speed', 'knelt', 'break'];
         let wordBuffer = "";
         let l1;
         let l2;
         let l3;
         let l4;
         let l5;
-        let gtick = [];
+        let blocksList = []; // to be used by block cleanup
         class Block {
             constructor(x, y, yo, xo, text, color){
                 this._setProps(x, y, yo, xo, text, color);
@@ -72,6 +73,8 @@
                 this.yvel = -0.5;
                 this.ge = false;
                 this.lock = null;
+                blocksList.push(this);
+                this.color = color;
             }
             toggleGravity(){
                 this.ge = !this.ge;
@@ -94,6 +97,15 @@
                 }
                 this.goto(this.x, this.y, this.yo + this.yvel, this.xo, this.color);
             }
+            setText(text){
+                if(text){
+                    this.text = text;
+                    this.el.innerHTML = text;
+                } else {
+                    this.text = "";
+                    this.el.innerHTML = "";
+                }
+            }
             _setProps(x, y, yo, xo, color){
                 this.x = x;
                 this.y = y;
@@ -111,7 +123,7 @@
             return (vmin / 100) * Math.min(window.innerHeight, window.innerWidth);
         }
         function tick(){
-            gtick.forEach(i => {
+            blocksList.forEach(i => {
                 i.gravityTick();
             })
         }
@@ -141,22 +153,110 @@
                 const currentTile = new Block(i[0], i[1] - j, 0, 0, "")
                 currentTile.lock = i[1]
                 currentTile.toggleGravity()
-                gtick.push(currentTile)
             })
             setInterval(tick, 5)
+            setTimeout(() => {
+                l1 = new Block(1, -1, 0, 0, "", "#4f4f4f")
+                l2 = new Block(2, -2, 0, 0, "", "#4f4f4f")
+                l3 = new Block(3, -3, 0, 0, "", "#4f4f4f")
+                l4 = new Block(4, -4, 0, 0, "", "#4f4f4f")
+                l5 = new Block(5, -5, 0, 0, "", "#4f4f4f")
+                l1.toggleGravity();
+                l2.toggleGravity();
+                l3.toggleGravity();
+                l4.toggleGravity();
+                l5.toggleGravity();
+                l1.lock = 1;
+                l2.lock = 1;
+                l3.lock = 1;
+                l4.lock = 1;
+                l5.lock = 1;
+            }, 2500)
         }
         function captureKeyboardInput(event){
             const allowedChars = "qwertyuiopasdfghjklzxcvbnm";
             const char = event.key.toLowerCase();
-            if (allowedChars.includes(char) | char === "backspace" ){
-                if (wordBuffer.length > 0 & char == "backspace"){
+            if (allowedChars.includes(char) || char === "backspace" ){
+                if (wordBuffer.length > 0 && char == "backspace"){
                     wordBuffer = wordBuffer.slice(0, -1);
-                } else if (wordBuffer.length < 5){
+                } else if (wordBuffer.length < 5 && char != "backspace"){
                     wordBuffer = wordBuffer.concat(char);
                 }
             }
+            // write buffer to screen
+            l1.setText(wordBuffer[0]);
+            l2.setText(wordBuffer[1]);
+            l3.setText(wordBuffer[2]);
+            l4.setText(wordBuffer[3]);
+            l5.setText(wordBuffer[4]);
+
+            if (char == "enter" && wordBuffer.length == 5){
+
+            }
         }
-        document.addEventListener("keyup", captureKeyboardInput)
+        function calculateDropPosition(obj){
+            if(obj.x){
+                
+            }
+        }
+        function checkgreenPos(obj){
+            const xChart = [null,
+                [2, 4, 6],
+                [3, 4, 5],
+                [2, 3, 4, 5, 6],
+                [3, 4, 5],
+                [2, 4, 6]
+            ]
+            const yPos = xChart[obj.x];
+            let res = null;
+            yPos.forEach((i) => {
+                const char =  words[checkWord(obj.x, i) - 1][obj.x - 1]
+                if (obj.text === char) {
+                    if (!res){
+                        res = i;
+                    }
+                }
+            })
+            return res;
+        }
+        function checkorangePos(obj){
+            const xChart = [null,
+                [2, 4, 6],
+                [3, 4, 5],
+                [2, 3, 4, 5, 6],
+                [3, 4, 5],
+                [2, 4, 6]
+            ]
+            const yPos = xChart[obj.x];
+            let res = null;
+            yPos.forEach((i) => {
+                const char =  words[checkWord(obj.x, i) - 1]
+                console.log(char)
+                if (char.includes(obj.text)) {
+                    if (res == null){
+                        console.log("set result")
+                        res = i;
+                    }
+                }
+            })
+            return res;
+
+        }
+        function checkWord (x, y){
+            const pos = [
+                [1,0,2,0,3],
+                [0,1,2,3,0],
+                [4,4,4,4,4],
+                [0,3,2,1,0],
+                [3,0,2,0,1]
+            ]
+            const posX = x - 1;
+            const posY = y - 2;
+            const objWord = pos[posY][posX];
+            return objWord;
+
+        }
+        document.addEventListener("keydown", captureKeyboardInput)
         setTimeout(init, 100)
 
     </script>

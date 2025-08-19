@@ -1,1 +1,1 @@
-["dived", "loved", "naves", "lover"]
+["grunt", "brute", "spurt", "truck"]

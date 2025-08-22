@@ -191,12 +191,26 @@
             l5.setText(wordBuffer[4]);
 
             if (char == "enter" && wordBuffer.length == 5){
-
+                drop(l1);
+                drop(l2);
+                drop(l3);
+                drop(l4);
+                drop(l5);
             }
         }
+        function drop(obj){
+            obj.yvel = -1 - obj.x / 9;
+            obj.lock = calculateDropPosition(obj);
+            obj.toggleGravity();
+            console.log(obj);
+        }
         function calculateDropPosition(obj){
-            if(obj.x){
-                
+            const orange = checkorangePos(obj);
+            const green = checkgreenPos(obj);
+            if (orange < green){
+                return orange;
+            } else {
+                return green;
             }
         }
         function checkgreenPos(obj){

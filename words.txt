@@ -1944,7 +1944,6 @@ pious
 piped
 piper
 pipes
-pique
 pitch
 pithy
 pivot
@@ -2785,7 +2784,6 @@ tools
 tooth
 topaz
 topic
-toque
 torch
 torso
 torts

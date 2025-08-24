@@ -48,8 +48,9 @@
     <div id="body">
     <div id="b">
     </div>
-    <div>
-        completed words
+    <div> 
+        <ul id="aw">
+        </ul>
     </div>
     </div>
     <script>
@@ -60,7 +61,9 @@
         let l3;
         let l4;
         let l5;
+        let typing;
         let blocksList = []; // to be used by block cleanup
+        let usedSquares = []; // for finding what squares have green tiles in them
         class Block {
             constructor(x, y, yo, xo, text, color){
                 this._setProps(x, y, yo, xo, text, color);
@@ -75,6 +78,7 @@
                 this.lock = null;
                 blocksList.push(this);
                 this.color = color;
+                this.dropColor = color;
             }
             toggleGravity(){
                 this.ge = !this.ge;
@@ -84,7 +88,10 @@
                 this._updatePosition();
             }
             gravityTick(){
-                if (this.yo > 1000 | !this.ge){return;}
+                if (!this.ge){return;}
+                if (this.y > 30) {
+                    this.el.remove();
+                }
                 this.yvel += 0.01
                 
                 if (this.yo >= vminToPx(11.5)){
@@ -93,7 +100,7 @@
                 }
                 if (this.y == this.lock){
                     this.toggleGravity();
-                    this.goto(this.x, this.y, 0, 0, this.color);
+                    this.goto(this.x, this.y, 0, 0, this.dropColor);
                 }
                 this.goto(this.x, this.y, this.yo + this.yvel, this.xo, this.color);
             }
@@ -127,7 +134,26 @@
                 i.gravityTick();
             })
         }
-        function init(){
+        function dropTypingBlocks(){
+            l1 = new Block(1, -1, 0, 0, "", "#4f4f4f")
+            l2 = new Block(2, -2, 0, 0, "", "#4f4f4f")
+            l3 = new Block(3, -3, 0, 0, "", "#4f4f4f")
+            l4 = new Block(4, -4, 0, 0, "", "#4f4f4f")
+            l5 = new Block(5, -5, 0, 0, "", "#4f4f4f")
+            l1.toggleGravity();
+            l2.toggleGravity();
+            l3.toggleGravity();
+            l4.toggleGravity();
+            l5.toggleGravity();
+            l1.lock = 1;
+            l2.lock = 1;
+            l3.lock = 1;
+            l4.lock = 1;
+            l5.lock = 1;
+        }
+        async function init(){
+            const response = await fetch("puzzle.txt");
+            words = await response.json();
             const patterns = [
                 [1, 2],
                 [3, 2],
@@ -149,31 +175,21 @@
             ]
             let j = 2;
             patterns.forEach(i => {
-                j++
+                j++;
                 const currentTile = new Block(i[0], i[1] - j, 0, 0, "")
                 currentTile.lock = i[1]
                 currentTile.toggleGravity()
             })
             setInterval(tick, 5)
             setTimeout(() => {
-                l1 = new Block(1, -1, 0, 0, "", "#4f4f4f")
-                l2 = new Block(2, -2, 0, 0, "", "#4f4f4f")
-                l3 = new Block(3, -3, 0, 0, "", "#4f4f4f")
-                l4 = new Block(4, -4, 0, 0, "", "#4f4f4f")
-                l5 = new Block(5, -5, 0, 0, "", "#4f4f4f")
-                l1.toggleGravity();
-                l2.toggleGravity();
-                l3.toggleGravity();
-                l4.toggleGravity();
-                l5.toggleGravity();
-                l1.lock = 1;
-                l2.lock = 1;
-                l3.lock = 1;
-                l4.lock = 1;
-                l5.lock = 1;
+                typing = true;
+                dropTypingBlocks()
             }, 2500)
         }
         function captureKeyboardInput(event){
+            if(!typing){
+                return;
+            }
             const allowedChars = "qwertyuiopasdfghjklzxcvbnm";
             const char = event.key.toLowerCase();
             if (allowedChars.includes(char) || char === "backspace" ){
@@ -191,29 +207,64 @@
             l5.setText(wordBuffer[4]);
 
             if (char == "enter" && wordBuffer.length == 5){
+                const aw = document.getElementById("aw");
+                const wordForList = document.createElement("li");
+                wordForList.innerHTML = wordBuffer;
+                aw.appendChild(wordForList);
+                wordBuffer = "";
                 drop(l1);
                 drop(l2);
                 drop(l3);
                 drop(l4);
                 drop(l5);
+                typing = false;
+                setTimeout(() => {
+                    typing = true;
+                    dropTypingBlocks();
+                }, 500)
             }
         }
         function drop(obj){
             obj.yvel = -1 - obj.x / 9;
-            obj.lock = calculateDropPosition(obj);
+            const dropData = calculateDropPosition(obj)
+            obj.lock = dropData[0];
             obj.toggleGravity();
             console.log(obj);
+            if(dropData[1] == "orange"){
+                obj.dropColor = "#ad8907"
+            } else if (dropData[1] == "green"){
+                obj.dropColor = "#059019"
+            }
         }
         function calculateDropPosition(obj){
             const orange = checkorangePos(obj);
             const green = checkgreenPos(obj);
+            if (green === null && orange !== null) {
+                return [orange, "orange"];
+            }
+            if (orange === null && green !== null) {
+                usedSquares.push(`${obj.x}.${green}`);
+                return [green, "green"];
+            }
+            if (orange === null && green === null){
+                return [null, "none"]; 
+            }
             if (orange < green){
-                return orange;
+                return [orange, "orange"];
             } else {
-                return green;
+                usedSquares.push(`${obj.x}.${green}`);
+                return [green, "green"];
             }
         }
         function checkgreenPos(obj){
+            if(obj.x == 3){
+                for (let i = 0; i < 5; i++){
+                    if (words[1][i] === obj.text && !usedSquares.includes(`3.${i + 2}`)){
+                        return i + 2
+                    }
+                }
+                return null;
+            }
             const xChart = [null,
                 [2, 4, 6],
                 [3, 4, 5],
@@ -226,7 +277,8 @@
             yPos.forEach((i) => {
                 const char =  words[checkWord(obj.x, i) - 1][obj.x - 1]
                 if (obj.text === char) {
-                    if (!res){
+                    if (!res && !usedSquares.includes(`${obj.x}.${i}`)){
+                        console.log(`green set result ${i}`)
                         res = i;
                     }
                 }
@@ -234,6 +286,9 @@
             return res;
         }
         function checkorangePos(obj){
+            if (obj.x == 3){
+                return null;
+            }
             const xChart = [null,
                 [2, 4, 6],
                 [3, 4, 5],
@@ -247,8 +302,8 @@
                 const char =  words[checkWord(obj.x, i) - 1]
                 console.log(char)
                 if (char.includes(obj.text)) {
-                    if (res == null){
-                        console.log("set result")
+                    if (res == null && !usedSquares.includes(`${obj.x}.${i}`)){
+                        console.log(`orange set result ${i}`)
                         res = i;
                     }
                 }
@@ -270,8 +325,8 @@
             return objWord;
 
         }
-        document.addEventListener("keydown", captureKeyboardInput)
-        setTimeout(init, 100)
+        document.addEventListener("keydown", captureKeyboardInput);
+        document.addEventListener("DOMContentLoaded", init);
 
     </script>
 </body>

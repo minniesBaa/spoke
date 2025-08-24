@@ -9,7 +9,7 @@ wl = [getword()]
 middlechar = wl[0][2]
 for i in range(3):
     word = "     "
-    while word[2] != middlechar:
+    while (word[2] != middlechar) or ("q" if i == 0 else "valuethatwonteverbeinaword") in word:
         word = getword()
     wl.append(word)
 

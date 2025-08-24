@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        #hidden-input {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            caret-color: transparent;
+}
         body {
             font-family: "Mozilla Text";
             margin-top: calc((100vh - 60vmin) / 2 - 60px);
@@ -76,7 +82,8 @@
         }
     </style>
 </head>
-<body>
+<body onclick="document.getElementById('hidden-input').focus()">
+    <input id="hidden-input">
     <div id="body">
     <div id="b">
     </div>

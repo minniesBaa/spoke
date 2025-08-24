@@ -100,6 +100,7 @@
         </div>
     </div>
     <script>
+        const mobileInput = document.getElementById('hidden-input')
         let words = [  ];
         let wordBuffer = "";
         let hints = 0;
@@ -396,6 +397,7 @@ ${guessColors.join("\n")}`
 
         }
         document.addEventListener("keydown", captureKeyboardInput);
+        mobileInput.addEventListener("keydown", captureKeyboardInput);
         document.addEventListener("DOMContentLoaded", init);
 
     </script>

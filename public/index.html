@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
+            font-family: "Mozilla Text";
             margin-top: calc((100vh - 60vmin) / 2 - 60px);
             background-color: #555;
             color: #eee;
@@ -20,14 +21,16 @@
             height: 72vmin;
             border-radius: 5%;
             background-color: #434343;
+            box-shadow: 3px 3px 3px #222;
         }
         #body {
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
+            }
         .tile {
+
             text-align: center;
             font-family: "Google Sans Code", monospace;
             font-optical-sizing: auto;
@@ -42,6 +45,35 @@
             left: 0%;
             border-radius: 25%;
         }
+        #winoverlay{
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            z-index: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        #wincontent{
+            box-shadow: 3px 3px 3px #222;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #333;
+        }
+        h1{
+            margin: 5px;
+        }
+        button, textarea{
+            background-color: #222;
+            color: #eee;
+        }
+        textarea{
+            width: 30vw;
+            height: 30vw;
+        }
     </style>
 </head>
 <body>
@@ -53,17 +85,31 @@
         </ul>
     </div>
     </div>
+    <div id="winoverlay">
+        <div id="wincontent">
+            <button onclick="closePopup()">x</button>
+            <h1>Puzzle Solved!</h1>
+            <textarea name="sharesolve" id="share" readonly></textarea>
+        </div>
+    </div>
     <script>
-        let words = ['quest', 'speed', 'knelt', 'break'];
+        let words = [  ];
         let wordBuffer = "";
+        let hints = 0;
         let l1;
         let l2;
         let l3;
         let l4;
         let l5;
         let typing;
+        let colorBuffer;
+        let guessColors = [];
         let blocksList = []; // to be used by block cleanup
         let usedSquares = []; // for finding what squares have green tiles in them
+        function closePopup(){
+            const el = document.getElementById('winoverlay');
+            el.style.display='none';
+        }
         class Block {
             constructor(x, y, yo, xo, text, color){
                 this._setProps(x, y, yo, xo, text, color);
@@ -212,16 +258,29 @@
                 wordForList.innerHTML = wordBuffer;
                 aw.appendChild(wordForList);
                 wordBuffer = "";
+                colorBuffer = "";
                 drop(l1);
                 drop(l2);
                 drop(l3);
                 drop(l4);
                 drop(l5);
+                guessColors.push(colorBuffer);
                 typing = false;
                 setTimeout(() => {
                     typing = true;
                     dropTypingBlocks();
                 }, 500)
+                setTimeout(()=>{
+                    if (usedSquares.length == 17){
+                        usedSquares.push("");
+                        const now = new Date();
+                        const shareDisplay = `I finished the Spoke puzzle for ${now.getMonth() + 1}/${now.getDay()}/${now.getFullYear()} in ${guessColors.length} guesses with ${hints} hints!
+Play it yourself at https://jwordgame012.web.app !
+${guessColors.join("\n")}`
+                        document.getElementById("share").innerHTML = shareDisplay;
+                        document.getElementById("winoverlay").style.display="flex";
+                    }
+                }, 1500)
             }
         }
         function drop(obj){
@@ -232,8 +291,12 @@
             console.log(obj);
             if(dropData[1] == "orange"){
                 obj.dropColor = "#ad8907"
+                colorBuffer = colorBuffer.concat("🟨")
             } else if (dropData[1] == "green"){
                 obj.dropColor = "#059019"
+                colorBuffer = colorBuffer.concat("🟩")
+            } else {
+                colorBuffer = colorBuffer.concat("⬛")
             }
         }
         function calculateDropPosition(obj){

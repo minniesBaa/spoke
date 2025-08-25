@@ -282,7 +282,7 @@
             l4.setText(wordBuffer[3]);
             l5.setText(wordBuffer[4]);
 
-            if (char == "enter" && wordBuffer.length == 5 && dictionary.includes(char)){
+            if (char == "enter" && wordBuffer.length == 5 && char in dictionary){
                 const aw = document.getElementById("aw");
                 const wordForList = document.createElement("li");
                 wordForList.innerHTML = wordBuffer;
@@ -318,7 +318,6 @@ ${guessColors.join("\n")}`
             const dropData = calculateDropPosition(obj)
             obj.lock = dropData[0];
             obj.toggleGravity();
-            console.log(obj);
             if(dropData[1] == "orange"){
                 obj.dropColor = "#ad8907"
                 colorBuffer = colorBuffer.concat("🟨")
@@ -371,7 +370,6 @@ ${guessColors.join("\n")}`
                 const char =  words[checkWord(obj.x, i) - 1][obj.x - 1]
                 if (obj.text === char) {
                     if (!res && !usedSquares.includes(`${obj.x}.${i}`)){
-                        console.log(`green set result ${i}`)
                         res = i;
                     }
                 }
@@ -393,10 +391,8 @@ ${guessColors.join("\n")}`
             let res = null;
             yPos.forEach((i) => {
                 const char =  words[checkWord(obj.x, i) - 1]
-                console.log(char)
                 if (char.includes(obj.text)) {
                     if (res == null && !usedSquares.includes(`${obj.x}.${i}`)){
-                        console.log(`orange set result ${i}`)
                         res = i;
                     }
                 }

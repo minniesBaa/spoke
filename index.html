@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Mozilla+Text:wght@200..700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✳ Spoke Word Game</title>
+    <title>Spoke Word Game</title>
     <style>
         #hidden-input {
             position: absolute;
@@ -16,9 +16,10 @@
 }
         body {
             font-family: "Mozilla Text";
-            margin-top: calc((100vh - 60vmin) / 2 - 60px);
+            margin: 10px;
             background-color: #555;
             color: #eee;
+
         }
         #b {
             overflow: hidden;
@@ -81,15 +82,31 @@
             width: 30vw;
             height: 30vw;
         }
+        a{
+            color: #eee;
+        }
+        #sidebar{
+            height: 72vmin;
+            overflow: auto;
+        }
+        img{
+            width: 60vmin;
+            padding-bottom: 5px;
+        }
     </style>
+    <link rel="icon" href="spokelogo.ico">
 </head>
 <body onclick="document.getElementById('hidden-input').focus()">
     <input id="hidden-input">
+    <img src="spokebanner.png" alt="spoke logo banner" style="display: block;margin: auto;">
     <div id="body">
     <div id="b">
+        
     </div>
-    <div> 
+    <div id="sidebar"> 
         <ul id="aw">
+            <a href="/howtoplay">How to <br>Play</a>
+            <br><br>
             Guesses:
         </ul>
     </div>

@@ -120,6 +120,7 @@
     </div>
     <script>
         const mobileInput = document.getElementById('hidden-input')
+        let dictionary = []
         let words = [];
         let wordBuffer = "";
         let hints = 0;
@@ -225,8 +226,10 @@
             l5.lock = 1;
         }
         async function init(){
-            const response = await fetch("puzzle.txt");
+            const response = await fetch("puzzle.json");
             words = await response.json();
+            const dict_res = await fetch("words.json");
+            dictionary = await dict_res.json();
             const patterns = [
                 [1, 2],
                 [3, 2],
@@ -279,7 +282,7 @@
             l4.setText(wordBuffer[3]);
             l5.setText(wordBuffer[4]);
 
-            if (char == "enter" && wordBuffer.length == 5){
+            if (char == "enter" && wordBuffer.length == 5 && dictionary.includes(char)){
                 const aw = document.getElementById("aw");
                 const wordForList = document.createElement("li");
                 wordForList.innerHTML = wordBuffer;
@@ -307,7 +310,7 @@ ${guessColors.join("\n")}`
                         document.getElementById("share").innerHTML = shareDisplay;
                         document.getElementById("winoverlay").style.display="flex";
                     }
-                }, 1500)
+                },4000)
             }
         }
         function drop(obj){

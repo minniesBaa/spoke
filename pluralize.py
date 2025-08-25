@@ -10,7 +10,7 @@ pluralized = []
 c = 0
 for i in data:
     c += 1
-    t = e(i)
+    t = e(i).lower()
     if len(t) == 5:
         pluralized.append(t)
         print(i)

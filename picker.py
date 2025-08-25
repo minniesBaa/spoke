@@ -1,7 +1,7 @@
 import random
 import json
 words = ""
-with open("words.txt", "r") as file:
+with open("wordgen_assets/5letterwords.txt", "r") as file:
     words = file.read()
 data = words.splitlines()
 getword = lambda: random.choice(data)

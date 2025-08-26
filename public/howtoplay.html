@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Mozilla+Text:wght@200..700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to play Spoke</title>
+        <style>
+        #hidden-input {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            caret-color: transparent;
+}
+        body {
+            font-family: "Mozilla Text";
+            margin-top: calc((100vh - 60vmin) / 2 - 60px);
+            background-color: #444;
+            color: #eee;
+        }
+        h1{
+            margin: 5px;
+            font-family: "Google Sans Code";
+        }
+        button, textarea{
+            background-color: #222;
+            color: #eee;
+        }
+        textarea{
+            width: 30vw;
+            height: 30vw;
+        }
+    </style>
+</head>
+<body>
+    <h1>How to play Spoke</h1>
+    <p>
+        The Spoke game board consists of 4 words, one vertical, one horizontal, and two diagonal. They all share a middle tile of the same letter. Enter a 5 letter word and press Enter, and each letter will drop down on the board until the square that it is in meets one of these conditions:<br>
+        <ol>
+        <li> The square is part of a word that contains the letter in that square, and the square snaps into place and turns orange (this behavior cannot happen in the middle column)
+        </li><li> The square is part of a word that has the letter in the square in that location in the word, and the letter becomes green and no other letters can snap into place there.
+    </li></ol>
+    If the word does not drop, it means the word is not in the dictionary availible at <code>/words.json</code>.
+The goal is to complete every word and turn every letter green! <br><br><br><br>Puzzle updates daily at 8:00 PM PDT (3:00 AM UTC)</p>
+</body>
+</html>

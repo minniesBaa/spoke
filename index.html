@@ -294,7 +294,7 @@
             l4.setText(wordBuffer[3]);
             l5.setText(wordBuffer[4]);
 
-            if (char == "enter" && wordBuffer.length == 5 && checkDicionary()){
+            if (char == "enter" && wordBuffer.length == 5 && checkDicionary(wordBuffer)){
                 const aw = document.getElementById("aw");
                 const wordForList = document.createElement("li");
                 wordForList.innerHTML = wordBuffer;

@@ -262,17 +262,15 @@
                 dropTypingBlocks()
             }, 2500)
         }
-        async function checkDicionary(word) {
-            try {
-                const req = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-                if (req.ok){
-                    return true
+        function checkDicionary(word) {
+            fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+            .then((r)=>{
+                if(r.ok){
+                    return true;
                 } else {
-                    return dictionary.includes(word);
+                     return dictionary.includes(word)
                 }
-            } catch {
-                return dictionary.includes(word);
-            }
+            })
         }
         function captureKeyboardInput(event){
             if(!typing){

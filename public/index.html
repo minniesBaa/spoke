@@ -263,7 +263,7 @@
             }, 2500)
         }
         function checkDicionary(word) {
-            fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+             return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
             .then((r)=>{
                 if(r.ok){
                     return true;

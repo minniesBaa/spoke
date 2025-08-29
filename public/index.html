@@ -265,7 +265,7 @@
         async function checkDicionary(word) {
             try {
                 const req = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-                if (req.ok || req.status == 404){
+                if (req.ok){
                     return true
                 } else {
                     return dictionary.includes(word);

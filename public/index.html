@@ -262,17 +262,15 @@
                 dropTypingBlocks()
             }, 2500)
         }
-        function checkDicionary(word) {
-             return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-            .then((r)=>{
-                if(r.ok){
-                    return true;
-                } else {
-                     return dictionary.includes(word)
-                }
-            })
+        async function  checkDicionary(word) {
+            const r = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+            if(r.ok){
+                return true;
+            } else {
+                 return dictionary.includes(word)
+            }
         }
-        function captureKeyboardInput(event){
+        async function captureKeyboardInput(event){
             if(!typing){
                 return;
             }
@@ -292,7 +290,7 @@
             l4.setText(wordBuffer[3]);
             l5.setText(wordBuffer[4]);
 
-            if (char == "enter" && wordBuffer.length == 5 && checkDicionary(wordBuffer)){
+            if (char == "enter" && wordBuffer.length == 5 && await checkDicionary(wordBuffer)){
                 const aw = document.getElementById("aw");
                 const wordForList = document.createElement("li");
                 wordForList.innerHTML = wordBuffer;

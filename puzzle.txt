@@ -1,1 +1,1 @@
-["exits", "swims", "briny", "brief"]
+["keeps", "shear", "breed", "sneer"]

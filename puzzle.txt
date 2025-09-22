@@ -1,1 +1,1 @@
-["graft", "wharf", "glaze", "heady"]
+["punch", "genre", "mania", "manor"]

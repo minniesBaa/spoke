@@ -1,1 +1,1 @@
-["tasty", "risky", "posse", "gusts"]
+["wordy", "horse", "circa", "girth"]

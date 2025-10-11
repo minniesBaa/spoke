@@ -1,1 +1,1 @@
-["wordy", "horse", "circa", "girth"]
+["growl", "spool", "shows", "trots"]

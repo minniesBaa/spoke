@@ -1,1 +1,1 @@
-["tents", "binds", "winks", "wines"]
+["latch", "altos", "gotta", "altos"]

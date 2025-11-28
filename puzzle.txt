@@ -1,1 +1,1 @@
-["forms", "words", "verge", "worst"]
+["gloss", "crone", "glory", "stoop"]

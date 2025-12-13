@@ -436,10 +436,12 @@ ${guessColors.join("\n")}`
             const validSquares = [
                 ['2.5', '3.6', '5.2', '1.2', '2.3', '3.4', '5.6', '2.4', '1.6', '4.3', '1.4', '4.4', '5.4', '4.5', '3.2', '3.3', '3.5']
             ]
-            let randomValue = ":D";
-            while (!(randomValue in usedSquares)){
+            let randomValue;
+            do {
                 randomValue = randomItem(validSquares)
             }
+            while (randomValue in usedSquares)
+
             const dropCoordsArray = randomValue.split(".");
             const dropCoords = [
                 Math.round(dropCoordsArray[0]),

@@ -427,6 +427,32 @@ ${guessColors.join("\n")}`
         document.addEventListener("keydown", captureKeyboardInput);
         document.addEventListener("DOMContentLoaded", init);
 
+        function randomItem(array){
+            const randomIndex = Math.floor(Math.random() * array.length);
+            return randomIndex;
+        }
+
+        function hint(){
+            const validSquares = [
+                ['2.5', '3.6', '5.2', '1.2', '2.3', '3.4', '5.6', '2.4', '1.6', '4.3', '1.4', '4.4', '5.4', '4.5', '3.2', '3.3', '3.5']
+            ]
+            let randomValue = ":D";
+            while (!(randomValue in usedSquares)){
+                randomValue = randomItem(validSquares)
+            }
+            const dropCoordsArray = randomValue.split(".");
+            const dropCoords = [
+                Math.round(dropCoordsArray[0]),
+                Math.round(dropCoordsArray[1])
+            ]
+            const hintBlock = new Block(dropCoords[0], -1, 0, 0, "", "red")
+            hintBlock.toggleGravity()
+            hintBlock.lock = dropCoords(1)
+        }
+
+
+
+
     </script>
 </body>
 </html>

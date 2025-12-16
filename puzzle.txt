@@ -1,1 +1,1 @@
-["stove", "atoll", "frost", "sooty"]
+["clods", "shown", "troop", "whoop"]

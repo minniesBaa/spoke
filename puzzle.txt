@@ -1,1 +1,1 @@
-["leapt", "flare", "heals", "feast"]
+["bowed", "cowed", "cowed", "cower"]

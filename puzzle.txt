@@ -1,1 +1,1 @@
-["skins", "crier", "swirl", "grill"]
+["bulks", "rills", "valet", "salsa"]

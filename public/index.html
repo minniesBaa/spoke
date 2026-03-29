@@ -211,7 +211,6 @@
             blocksList.forEach(i => {
                 i.gravityTick();
             })
-            mobileKeyboard();
         }
         function dropTypingBlocks(){
             l1 = new Block(1, -1, 0, 0, "", "#4f4f4f")
@@ -287,6 +286,7 @@
                 currentTile.lock = i[1]
                 currentTile.toggleGravity()
             })
+            mobileInput.addEventListener("input", captureKeyboardInput);
             setInterval(tick, 5)
             setTimeout(() => {
                 typing = true;

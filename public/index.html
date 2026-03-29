@@ -105,7 +105,9 @@
     </div>
     <div id="sidebar"> 
         <ul id="aw">
-            <a href="howtoplay.html">How to <br>Play</a>
+            <button onclick="lsocation.href='howtoplay.html'">How to<br>play</button>
+            <br><br>
+            <button onclick="hint()" id="hint">hint</button>
             <br><br>
             Guesses:
         </ul>
@@ -458,14 +460,21 @@ ${guessColors.join("\n")}`
             return dingus[randomIndex];
         }
         function hint(){
+            document.getElementById("hint").disabled = true;
+            setTimeout(function(){
+                document.getElementById("hint").disabled = false;
+            }, 10000)
+            hints++;
             const validSquares = [
                 '2.5', '3.6', '5.2', '1.2', '2.3', '3.4', '5.6', '2.4', '1.6', '4.3', '1.4', '4.4', '5.4', '4.5', '3.2', '3.3', '3.5'
             ]
             let randomValue = randomItem(validSquares);
+            let count = 0;
             do {
-                randomValue = randomItem(validSquares)
+                randomValue = randomItem(validSquares);
+                count++;
             }
-            while (usedSquares.includes(randomValue))
+            while (usedSquares.includes(randomValue) || count > 100)
             console.log(usedSquares)
             usedSquares.push(randomValue);
             console.log(usedSquares)

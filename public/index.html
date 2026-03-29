@@ -338,7 +338,11 @@
                     typing = true;
                     dropTypingBlocks();
                 }, 500)
-                setTimeout(()=>{
+                testCompletedPuzzle();
+            }
+        }
+        function testCompletedPuzzle(){
+            setTimeout(()=>{
                     if (usedSquares.length == 17){
                         usedSquares.push("");
                         const now = new Date();
@@ -349,7 +353,6 @@ ${guessColors.join("\n")}`
                         document.getElementById("winoverlay").style.display="flex";
                     }
                 },4000)
-            }
         }
         function drop(obj){
             obj.yvel = -1 - obj.x / 9;
@@ -498,6 +501,7 @@ ${guessColors.join("\n")}`
             const hintBlock = new Block(dropCoords[0], -1, 0, 0, letter, "#059019");
             hintBlock.toggleGravity();
             hintBlock.lock = dropCoords[1];
+            testCompletedPuzzle();
         }
 
 

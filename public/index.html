@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Mozilla+Text:wght@200..700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spoke Word Game</title>
+    <title>Spoke</title>
     <style>
         #hidden-input {
             position: absolute;
@@ -228,10 +228,36 @@
             l5.lock = 1;
         }
         async function init(){
-            const response = await fetch("puzzle.json");
-            words = await response.json();
-            const dict_res = await fetch("words.json");
-            dictionary = await dict_res.json();
+            try {
+                const response = await fetch("puzzle.json");
+                words = await response.json();
+                const dict_res = await fetch("words.json");
+                dictionary = await dict_res.json();
+            } catch (e){
+                console.log(e);
+                for (var i = 1; i < 6; i++){
+                    const curTile = new Block(i, -i-2, 0, 0, "error"[i-1], "#cc0000")
+                    curTile.lock = 1;
+                    curTile.toggleGravity();
+                }
+                for (var i = 2; i < 5; i++){
+                    const curTile = new Block(i, -i-7, 0, 0, "try"[i-2])
+                    curTile.lock = 3;
+                    curTile.toggleGravity();
+                }
+                for (var i = 1; i < 6; i++){
+                    const curTile = new Block(i, -i-10, 0, 0, "again"[i-1])
+                    curTile.lock = 4;
+                    curTile.toggleGravity();
+                }
+                for (var i = 1; i < 6; i++){
+                    const curTile = new Block(i, -i-15, 0, 0, "later"[i-1])
+                    curTile.lock = 5;
+                    curTile.toggleGravity();
+                }
+                setInterval(tick, 5);
+                return;
+            }
             const patterns = [
                 [1, 2],
                 [3, 2],

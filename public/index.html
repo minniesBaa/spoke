@@ -460,6 +460,9 @@ ${guessColors.join("\n")}`
             return dingus[randomIndex];
         }
         function hint(){
+            if (usedSquares.length == 17){
+                return;
+            }
             document.getElementById("hint").disabled = true;
             setTimeout(function(){
                 document.getElementById("hint").disabled = false;

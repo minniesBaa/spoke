@@ -475,7 +475,7 @@ ${guessColors.join("\n")}`
                 Math.round(dropCoordsArray[0]),
                 Math.round(dropCoordsArray[1])
             ]
-            letter = words[checkWord(dropCoords[0], dropCoords[1])-1][dropCoords[0]];
+            letter = words[checkWord(dropCoords[0], dropCoords[1])-1][dropCoords[0]-1];
             const hintBlock = new Block(dropCoords[0], -1, 0, 0, letter, "#059019");
             hintBlock.toggleGravity();
             hintBlock.lock = dropCoords[1];

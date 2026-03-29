@@ -461,26 +461,24 @@ ${guessColors.join("\n")}`
             const validSquares = [
                 '2.5', '3.6', '5.2', '1.2', '2.3', '3.4', '5.6', '2.4', '1.6', '4.3', '1.4', '4.4', '5.4', '4.5', '3.2', '3.3', '3.5'
             ]
-            let randomValue;
+            let randomValue = randomItem(validSquares);
             do {
                 randomValue = randomItem(validSquares)
-                console.log(randomValue);
-                
             }
-            while (randomValue in usedSquares)
-
-            console.log(randomValue);
+            while (usedSquares.includes(randomValue))
+            console.log(usedSquares)
+            usedSquares.push(randomValue);
+            console.log(usedSquares)
 
             const dropCoordsArray = randomValue.split(".");
             const dropCoords = [
                 Math.round(dropCoordsArray[0]),
                 Math.round(dropCoordsArray[1])
             ]
-            const hintBlock = new Block(dropCoords[0], -1, 0, 0, "", "red")
-            console.log(hintBlock);
-            
-            hintBlock.toggleGravity()
-            hintBlock.lock = dropCoords[1]
+            letter = words[checkWord(dropCoords[0], dropCoords[1])][dropCoords[0]];
+            const hintBlock = new Block(dropCoords[0], -1, 0, 0, letter, "#059019");
+            hintBlock.toggleGravity();
+            hintBlock.lock = dropCoords[1];
         }
 
 

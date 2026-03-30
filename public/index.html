@@ -286,7 +286,7 @@
                 currentTile.lock = i[1]
                 currentTile.toggleGravity()
             })
-            mobileInput.addEventListener("input", captureKeyboardInput);
+            mobileInput.addEventListener("input", mobileKeyboard);
             setInterval(tick, 5)
             setTimeout(() => {
                 typing = true;
@@ -505,8 +505,11 @@ ${guessColors.join("\n")}`
             testCompletedPuzzle();
         }
 
-        function mobileKeyboard(){
-            console.log(mobileInput.value)
+        function mobileKeyboard(e){
+            captureKeyboardInput({"key": e.data})
+            setTimeout(() => {
+                mobileInputs.value = '';
+            }, 10);
         }
     </script>
 </body>

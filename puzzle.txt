@@ -1,1 +1,1 @@
-["fuels", "creek", "bleed", "slept"]
+["avail", "draft", "shank", "goals"]

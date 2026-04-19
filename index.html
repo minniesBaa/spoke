@@ -242,14 +242,14 @@
                     var num4;
                     do {
                         num2 = dictionary[Math.floor(Math.random() * dictionary.length)];
-                    } while (num2[2] == num1[2])
+                    } while (num2[2] != num1[2])
                     do {
                         num3 = dictionary[Math.floor(Math.random() * dictionary.length)];
-                    } while (num3[2] == num1[2])
+                    } while (num3[2] != num1[2])
                     do {
                         num4 = dictionary[Math.floor(Math.random() * dictionary.length)];
-                    } while (num4[2] == num1[2])
-                    words = [num1, num2, num3, num4]
+                    } while (num4[2] != num1[2])
+                    words = [num1, num2, num3, num4];
                 } else {
                     const response = await fetch("puzzle.json");
                     words = await response.json();

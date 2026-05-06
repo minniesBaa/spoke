@@ -1,1 +1,1 @@
-["clown", "troop", "aloft", "goods"]
+["irked", "joked", "liked", "takes"]

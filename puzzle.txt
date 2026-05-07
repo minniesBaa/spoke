@@ -1,1 +1,1 @@
-["irked", "joked", "liked", "takes"]
+["deity", "skill", "raise", "trial"]

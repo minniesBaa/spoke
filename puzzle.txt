@@ -1,1 +1,1 @@
-["deity", "skill", "raise", "trial"]
+["inept", "seeds", "smear", "avert"]

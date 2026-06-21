@@ -1,1 +1,1 @@
-["squat", "scull", "chump", "churl"]
+["shots", "clock", "shook", "thorn"]

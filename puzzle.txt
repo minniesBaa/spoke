@@ -1,1 +1,1 @@
-["cases", "baste", "pesos", "nasal"]
+["dices", "lucid", "kicks", "locus"]

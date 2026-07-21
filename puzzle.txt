@@ -1,1 +1,1 @@
-["booth", "irons", "showy", "swoop"]
+["lower", "fewer", "lowly", "newer"]

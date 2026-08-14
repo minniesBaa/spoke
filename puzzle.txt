@@ -1,1 +1,1 @@
-["rowdy", "rowed", "lower", "pawed"]
+["badge", "budge", "older", "rider"]

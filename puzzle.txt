@@ -1,1 +1,1 @@
-["rooks", "snout", "knows", "spoil"]
+["mauve", "abuse", "route", "amuse"]

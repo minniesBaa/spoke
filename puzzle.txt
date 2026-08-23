@@ -1,1 +1,1 @@
-["masts", "cases", "taste", "reset"]
+["zones", "hunts", "pants", "lingo"]

@@ -1,1 +1,1 @@
-["zones", "hunts", "pants", "lingo"]
+["finds", "lance", "wants", "fancy"]

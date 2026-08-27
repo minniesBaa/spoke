@@ -1,1 +1,1 @@
-["pesos", "onset", "miser", "basil"]
+["adapt", "beaks", "slain", "tramp"]

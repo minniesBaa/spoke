@@ -1,1 +1,1 @@
-["pithy", "patch", "optic", "motto"]
+["pools", "bloom", "story", "crops"]

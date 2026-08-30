@@ -2,4 +2,4 @@
 
 [![firebase deployment](https://github.com/minniesBaa/spoke/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/minniesBaa/spoke/actions/workflows/firebase-hosting-merge.yml)
 
-The game is availible at [spoke.themice.org](https://spoke.themice.org)
+The game is available at [spoke.themice.org](https://spoke.themice.org)

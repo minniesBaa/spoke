@@ -8,12 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spoke</title>
     <style>
-        #hidden-input {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            caret-color: transparent;
-}
+
         body {
             font-family: "Mozilla Text";
             margin: 10px;
@@ -65,11 +60,32 @@
             z-index: 100%;
             background-color: rgba(0, 0, 0, 0.2);
         }
+        #startmenu{
+            display: flex;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            z-index: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
         #wincontent{
             box-shadow: 3px 3px 3px #222;
             border-radius: 10px;
             padding: 20px;
             background-color: #333;
+        }
+        #startcontent{
+            box-shadow: 3px 3px 3px #222;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #333;
+            max-height: 45%;
+            max-width: 60%;
+            overflow-y: scroll;
         }
         h1{
             margin: 5px;
@@ -96,8 +112,7 @@
     </style>
     <link rel="icon" href="spokelogo.ico">
 </head>
-<body onclick="document.getElementById('hidden-input').focus()">
-    <input id="hidden-input">
+<body>
     <img onclick="window.location.href = '/'" src="spokebanner.png" alt="spoke logo banner" style="display: block;margin: auto;">
     <div id="body">
     <div id="b">
@@ -122,10 +137,27 @@
             <textarea name="sharesolve" id="share" readonly></textarea>
         </div>
     </div>
+    <div id="startmenu">
+        <div id="startcontent">
+            <button onclick="closePopup()">x</button>
+            <br>
+            <p style="background-color: rgb(199, 199, 69);color: black;">
+                <b>Notice: </b>
+                The dictionary api that I used to make this game no longer works. The game does have its own (significantly shorter) word list built-in, which will be used until I find a better solution. sorry :(
+            </p>
+            <img onclick="window.location.href = '/'" src="spokebanner.png" alt="spoke logo banner" style="display: block;margin: auto;">
+            <br>
+            <p>
+                <a href="https://github.com/minniesBaa/spoke">github</a> | <a href="https://github.com/minniesBaa/spoke/issues">issues</a> | <a href="https://spoke.themice.org/howtoplay.html">how to play</a>
+            </p>
+            <p>
+                If anyone has a better word list, pluralizer, or dictionary API, please post an issue on the <a href="https://github.com/minniesBaa/spoke/issues">GitHub page</a> to let me know. thanks :P
+            </p>
+        </div>
+    </div>
     <script>
         console.log("%cHey!", "font-size: 50px;")
         console.log("It's fine if you poke around here, just letting you know that today's puzzle is recorded in the \"network\" tab of most browser's developer tools. Thanks for playing my game!")
-        const mobileInput = document.getElementById('hidden-input')
         let dictionary = []
         let words = [];
         let wordBuffer = "";
@@ -143,7 +175,10 @@
         function closePopup(){
             const el = document.getElementById('winoverlay');
             el.style.display='none';
+            const el2 = document.getElementById('startmenu');
+            el2.style.display='none';
         }
+        
         class Block {
             constructor(x, y, yo, xo, text, color){
                 this._setProps(x, y, yo, xo, text, color);
@@ -305,7 +340,6 @@
                 currentTile.lock = i[1]
                 currentTile.toggleGravity()
             })
-            mobileInput.addEventListener("input", mobileKeyboard);
             setInterval(tick, 5)
             setTimeout(() => {
                 typing = true;
@@ -313,11 +347,11 @@
             }, 2500)
         }
         async function  checkDicionary(word) {
-            const r = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-            if(r.ok){
+            if(dictionary.includes(word)){
                 return true;
             } else {
-                 return dictionary.includes(word)
+                const r = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+                return r.ok;
             }
         }
         async function captureKeyboardInput(event){
@@ -367,7 +401,7 @@
                         usedSquares.push("");
                         const now = new Date();
                         const shareDisplay = `I finished the Spoke puzzle for ${now.getMonth() + 1}/${now.getDay()}/${now.getFullYear()} in ${guessColors.length} guesses with ${hints} hints!
-Play it yourself at https://jwordgame012.web.app !
+Play it yourself at https://spoke.themice.org !
 ${guessColors.join("\n")}`
                         document.getElementById("share").innerHTML = shareDisplay;
                         document.getElementById("winoverlay").style.display="flex";
@@ -524,12 +558,6 @@ ${guessColors.join("\n")}`
             testCompletedPuzzle();
         }
 
-        function mobileKeyboard(e){
-            captureKeyboardInput({"key": e.data})
-            setTimeout(() => {
-                mobileInput.value = '';
-            }, 10);
-        }
     </script>
 </body>
 </html>

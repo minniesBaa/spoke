@@ -28,15 +28,6 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JWORDGAME012 }}
           channelId: live
           projectId: jwordgame012
-      # - name: Commit and push if it changed
-      #   uses: stefanzweifel/git-auto-commit-action@v5
-      #   with:
-      #     commit_message: "[automated] 📃 generate words for today"
-      #     branch: main
-      #     file_pattern: puzzle.txt
-          
-      #     commit_user_name: "word generation bot"
-      #     commit_user_email: "actions@github.com"
       - name: Commit and push if it changed
         uses: EndBug/add-and-commit@v9
         with:

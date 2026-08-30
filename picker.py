@@ -18,5 +18,5 @@ for i in range(3):
     wl.append(word)
 
 out = json.dumps(wl)
-with open("puzzle.txt", "w") as file:
+with open("public/puzzle.json", "w") as file:
     file.write(out)
